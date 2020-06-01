@@ -7,24 +7,24 @@ import javax.swing.JFrame;
 
 public class GUI extends JFrame implements ActionListener {
 
-    private static final long serialVersionUID = 1L;
+	private static final long serialVersionUID = 1L;
 
-    public GUI() {
-	initWindow();
-    }
+	public GUI() {
+		initWindow();
+	}
 
-    private void initWindow() {
-	setTitle("GDI Projekt");
-	setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-	this.setSize(500, 650);
-	this.setResizable(false);
-	setLocationRelativeTo(null); // setzt das Fenster in die Mitte des Bildschirms
-	setVisible(true);
-    }
+	private void initWindow() {
+		setTitle("GDI Projekt");
+		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		this.setSize(500, 650);
+		this.setResizable(false);
+		setLocationRelativeTo(null); // setzt das Fenster in die Mitte des Bildschirms
+		setVisible(true);
+	}
 
-    @Override
-    public void actionPerformed(ActionEvent e) {
-	// TODO Auto-generated method stub
+	@Override
+	public void actionPerformed(ActionEvent e) {
+		// TODO Auto-generated method stub
 
-    }
+	}
 }

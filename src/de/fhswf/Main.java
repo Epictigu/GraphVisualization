@@ -2,13 +2,17 @@ package de.fhswf;
 
 public class Main {
 
-    /*
-     * TODO FileSystem JFrame anlegen Pixelberechnung Zugriff auf Dateiexplorer
-     * Zeichnen von Knoten/Kanten
-     */
+	/*
+	 * TODO
+	 * FileSystem
+	 * JFrame anlegen
+	 * Pixelberechnung
+	 * Zugriff auf Dateiexplorer
+	 * Zeichnen von Knoten/Kanten
+	 */
 
-    public static void main(String[] args) {
-	new GUI();
-    }
+	public static void main(String[] args) {
+		new GUI();
+	}
 
 }
