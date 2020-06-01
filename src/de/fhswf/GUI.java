@@ -16,8 +16,8 @@ public class GUI extends JFrame implements ActionListener {
 	private void initWindow() {
 		setTitle("GDI Projekt");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
-		this.setSize(500, 650);
-		this.setResizable(false);
+		setSize(500, 650);
+		setResizable(false);
 		setLocationRelativeTo(null); // setzt das Fenster in die Mitte des Bildschirms
 		setVisible(true);
 	}
