@@ -1,12 +1,17 @@
 package de.fhswf;
 
-public class Main
-{
-
-	public static void main(String[] args)
-	{
-		System.out.println("Augen auf beim Eierkauf.");
-		System.out.println("AAAAAHHHHHHH");
+public class Main {
+	
+	/*TODO
+	 * FileSystem
+	 * JFrame anlegen
+	 * Pixelberechnung
+	 * Zugriff auf Dateiexplorer
+	 * Zeichnen von Knoten/Kanten
+	 */
+	
+	public static void main(String[] args) {
+		System.out.println("Hello World.");
 	}
 
 }
