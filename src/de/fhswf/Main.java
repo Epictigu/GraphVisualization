@@ -3,8 +3,8 @@ package de.fhswf;
 public class Main {
 
 //	  TODO:
-//	  FileSystem					Gin-Wah
-//			Dekodieren
+//	  FileSystem					Gin-Wah, Pascal
+//			Dekodieren				Gin-Wah, Pascal
 //	  JFrame anlegen				Gin-Wah
 //			UI
 //	  Zugriff auf Dateiexplorer		Pascal
