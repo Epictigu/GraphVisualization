@@ -15,39 +15,45 @@ public class Knoten extends JPanel{
 
 	private static final long serialVersionUID = 2L;
 	
-	float degrees = 0f;
-	int knoten = 30;
+	private Graph graph;
+	
+	private float degreeC = 360f;
 	private int iD = 80;
 	
 	Map<Integer, Point> circlePos = new HashMap<Integer, Point>();
 	
+	public Knoten(Graph g) {
+		graph = g;
+        if(g.getAmountKnots() > 4) 
+        	iD-=(g.getAmountKnots()-4)*2;
+        if(g.getAmountKnots() > 1)
+        	degreeC = 360f / g.getAmountKnots();
+	}
+	
 	@Override
 	public void paint(Graphics g) {
-		iD = 80;
 		Graphics2D g2d = (Graphics2D)g;
 		g2d.setRenderingHint(
 		        RenderingHints.KEY_ANTIALIASING,
 		        RenderingHints.VALUE_ANTIALIAS_ON);
 		g2d.fillRect(0, 0, getWidth(), getHeight());
 		g2d.setColor(Color.WHITE);
-        if(knoten > 4) {
-        	iD-=(knoten-4)*2;
+		
+        for(int i = 0; i < graph.getAmountKnots(); i++) {
+        	circlePos.put(i + 1, drawEcke(g2d, (i * degreeC)));
         }
         
-        float degreeC = 360f;
-        if(knoten > 0)degreeC = 360f / knoten;
-        for(int i = 0; i < knoten; i++) {
-        	circlePos.put(i + 1, drawEcke(g2d, degrees + (i * degreeC)));
+        g2d.setStroke(new BasicStroke(5f - (graph.getAmountKnots() / 10)));
+        
+        boolean[][] adjM = graph.getAdjacencyMatrix();
+        for(int i = 1; i <= graph.getAmountKnots(); i++) {
+        	for(int j = 1; j <= graph.getAmountKnots(); j++) {
+        		if(j != i) {
+        			if(adjM[i][j])
+        				drawKante(g2d, i, j);
+        		}
+        	}
         }
-        
-        g2d.setStroke(new BasicStroke(5f - (knoten / 10)));
-        
-        drawKante(g2d, 2, 7);
-        drawKante(g2d, 9, 15);
-        drawKante(g2d, 3, 7);
-        drawKante(g2d, 11, 22);
-        drawKante(g2d, 7, 23);
-        drawKante(g2d, 1, 23);
         
         g2d.dispose();
 	}
