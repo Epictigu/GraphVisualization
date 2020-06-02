@@ -13,6 +13,17 @@ public class Main {
 
 	public static void main(String[] args) {
 		GUI gui = new GUI();
+		
+		while(true) {
+			gui.k.degrees++;
+			if(gui.k.degrees >=360)gui.k.degrees-=360;
+			gui.repaint();
+			try {
+				Thread.sleep(10l);
+			} catch (InterruptedException e) {
+				e.printStackTrace();
+			}
+		}
 	}
 
 }
