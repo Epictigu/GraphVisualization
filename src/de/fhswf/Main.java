@@ -12,7 +12,7 @@ public class Main {
 //	  		Pixelberechnung			Timo, Dominik
 
 	public static void main(String[] args) {
-		GUI gui = new GUI();
+		new GUI();
 	}
 
 }

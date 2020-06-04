@@ -15,7 +15,7 @@ public class GUI extends JFrame implements ActionListener {
 	public GUI() {
 		initWindow();
 	}
-
+	
 	private void initWindow() {
 		setTitle("GDI Projekt");
 		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
@@ -26,7 +26,7 @@ public class GUI extends JFrame implements ActionListener {
 		
 		getContentPane().setBackground(new Color(51,51,51));
 		
-		k = new Knoten();
+		k = new Knoten(ReadFile.readFileScanner("Abbildung_22_3.gdi"));
 		k.setBounds(25, 146, 450, 450);
 		add(k);
 		
