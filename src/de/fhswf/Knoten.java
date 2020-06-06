@@ -36,6 +36,7 @@ public class Knoten extends JPanel{
 		g2d.setRenderingHint(
 		        RenderingHints.KEY_ANTIALIASING,
 		        RenderingHints.VALUE_ANTIALIAS_ON);
+		g2d.setColor(new Color(51,51,51));
 		g2d.fillRect(0, 0, getWidth(), getHeight());
 		g2d.setColor(Color.WHITE);
 		
