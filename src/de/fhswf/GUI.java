@@ -44,7 +44,7 @@ public class GUI extends JFrame implements ActionListener {
 
 		getContentPane().setBackground(new Color(51, 51, 51));
 
-		k = new Knoten(ReadFile.readFileScanner("Abbildung_22_3.gdi"));
+		k = new Knoten();
 		k.setBounds(25, 146, 450, 450);
 		add(k);
 
@@ -74,12 +74,9 @@ public class GUI extends JFrame implements ActionListener {
 			fc.setCurrentDirectory(new java.io.File("C:/"));
 			fc.setDialogTitle(".gdi Datei auswählen"); // Titel des Dateiexplorers ?
 			fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // glaube sollte nur files zeigen
-			if (fc.showOpenDialog(open) == JFileChooser.APPROVE_OPTION) {
-				// bin mir nicht sicher wozu das gut sein sollte/ scheint mir unnoetig
+			if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				k.setFile(ReadFile.readFileScanner(fc.getSelectedFile().getAbsolutePath()));
 			}
-			System.out.println("Gewaehlte Datei: " + fc.getSelectedFile().getAbsolutePath()); // Net sicher obs ueber
-																								// testzwecke hinaus
-																								// sinvoll ist
 
 		}
 	}

@@ -15,12 +15,14 @@ public class Knoten extends JPanel{
 
 	private static final long serialVersionUID = 2L;
 	
-	private Graph graph;
+	private Graph graph = null;
 	
 	private float degreeC = 360f;
 	private int iD = 80;
 	
 	Map<Integer, Point> circlePos = new HashMap<Integer, Point>();
+
+	public Knoten() {}
 	
 	public Knoten(Graph g) {
 		graph = g;
@@ -28,6 +30,17 @@ public class Knoten extends JPanel{
         	iD-=(g.getAmountKnots()-4)*2;
         if(g.getAmountKnots() > 1)
         	degreeC = 360f / g.getAmountKnots();
+	}
+	
+	public void setFile(Graph g) {
+		graph = g;
+		iD = 80;
+		degreeC = 360;
+        if(g.getAmountKnots() > 4) 
+        	iD-=(g.getAmountKnots()-4)*2;
+        if(g.getAmountKnots() > 1)
+        	degreeC = 360f / g.getAmountKnots();
+        repaint();
 	}
 	
 	@Override
@@ -39,6 +52,8 @@ public class Knoten extends JPanel{
 		g2d.setColor(new Color(51,51,51));
 		g2d.fillRect(0, 0, getWidth(), getHeight());
 		g2d.setColor(Color.WHITE);
+		
+		if(graph == null) return;
 		
         for(int i = 0; i < graph.getAmountKnots(); i++) {
         	circlePos.put(i + 1, drawEcke(g2d, (i * degreeC)));
