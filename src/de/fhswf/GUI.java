@@ -100,7 +100,7 @@ public class GUI extends JFrame implements ActionListener {
 				String path = fc.getSelectedFile().getAbsolutePath();
 				if(!path.toLowerCase().endsWith(".gdi"))return;
 				Graph g = ReadFile.readFileScanner(path);
-				
+				 	
 				if(k.graph != null) {
 					int result = JOptionPane.showConfirmDialog(null, "Soll der Graph in einem neuen Fenster geöffnet werden?");
 					if(result == 2) return;
