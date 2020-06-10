@@ -4,8 +4,13 @@ public class Graph {
 	private int amountKnots;
 	private String[] knotNames;
 	private boolean[][] adjacencyMatrix;
-
-	public Graph() {
+	
+	private String path;
+	
+	
+	
+	public Graph(String path) {
+		this.path = path;
 	}
 
 	public void init(int amountKnots) {
@@ -32,6 +37,10 @@ public class Graph {
 
 	public boolean[][] getAdjacencyMatrix() {
 		return adjacencyMatrix;
+	}
+	
+	public String getPath() {
+		return path;
 	}
 
 }

@@ -10,14 +10,13 @@ import java.awt.RenderingHints;
 import java.util.HashMap;
 import java.util.Map;
 
-import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Knoten extends JPanel{
 
 	private static final long serialVersionUID = 2L;
 	
-	private Graph graph = null;
+	public Graph graph = null;
 	
 	private float degreeC = 360f;
 	private int iD = 80;
@@ -35,15 +34,6 @@ public class Knoten extends JPanel{
 	}
 	
 	public void setFile(Graph g) {
-		if(graph != null) {
-			int result = JOptionPane.showConfirmDialog(null, "Soll der Graph in einem neuen Fenster geöffnet werden?");
-			if(result == 2) return;
-			if(result == 0) {
-				Main.openNewFrame(g);
-				return;
-			}
-		}
-		
 		graph = g;
 		iD = 80;
 		degreeC = 360;
