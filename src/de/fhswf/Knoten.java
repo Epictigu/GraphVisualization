@@ -7,10 +7,12 @@ import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
 import java.awt.RenderingHints;
+import java.awt.event.MouseEvent;
 import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JPanel;
+import javax.swing.ToolTipManager;
 
 public class Knoten extends JPanel{
 
@@ -23,6 +25,7 @@ public class Knoten extends JPanel{
 	
 	Map<Integer, Point> circlePos = new HashMap<Integer, Point>();
 
+	
 	public Knoten() {}
 	
 	public Knoten(Graph g) {
@@ -31,7 +34,24 @@ public class Knoten extends JPanel{
         	iD-=(g.getAmountKnots()-4)*2;
         if(g.getAmountKnots() > 1)
         	degreeC = 360f / g.getAmountKnots();
+        
+        ToolTipManager.sharedInstance().registerComponent(this);
 	}
+	
+	@Override
+	public String getToolTipText(MouseEvent event) {
+		for(int i = 1; i <= circlePos.size(); i++) {
+			Point oP = circlePos.get(i);
+			double d = Math.hypot(event.getX()-(oP.getX() + iD / 2), event.getY()-(oP.getY() + iD / 2));
+			if(d < iD / 2) return "   " + graph.getKnotNames()[i];
+		}
+		return null;
+	}
+	
+    @Override
+    public Point getToolTipLocation(MouseEvent event) {
+        return event.getPoint();
+    }
 	
 	public void setFile(Graph g) {
 		graph = g;

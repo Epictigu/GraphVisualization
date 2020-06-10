@@ -3,6 +3,7 @@ package de.fhswf;
 import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
+import java.io.File;
 
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -47,11 +48,12 @@ public class GUI extends JFrame implements ActionListener {
 		}
 
 		getContentPane().setBackground(new Color(51, 51, 51));
-
+		
 		k = new Knoten();
 		k.setBounds(25, 46, 450, 450);
 		if (g != null)
 			k.setFile(g);
+		k.setToolTipText("Platzhalter");
 		add(k);
 
 		// TestMenu
@@ -86,25 +88,28 @@ public class GUI extends JFrame implements ActionListener {
 	@Override
 	public void actionPerformed(ActionEvent e) {
 		if (e.getActionCommand().equalsIgnoreCase("selectFile")) {
-
+			
 			JFileChooser fc = new JFileChooser();
 			FileNameExtensionFilter filter = new FileNameExtensionFilter("GDIDatei", "gdi");
 			fc.setFileFilter(filter);
 
-			fc.setCurrentDirectory(new java.io.File("C:/"));
+			fc.setCurrentDirectory(new File("."));
 			fc.setDialogTitle(".gdi Datei auswählen");
 			fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
+				String path = fc.getSelectedFile().getAbsolutePath();
+				if(!path.toLowerCase().endsWith(".gdi"))return;
+				Graph g = ReadFile.readFileScanner(path);
+				
 				if(k.graph != null) {
 					int result = JOptionPane.showConfirmDialog(null, "Soll der Graph in einem neuen Fenster geöffnet werden?");
 					if(result == 2) return;
 					if(result == 0) {
-						Main.openNewFrame(ReadFile.readFileScanner(fc.getSelectedFile().getAbsolutePath()));
+						Main.openNewFrame(g);
 						return;
 					}
 				}
 				
-				Graph g = ReadFile.readFileScanner(fc.getSelectedFile().getAbsolutePath());
 				setTitle("GDI Projekt - " +  g.getPath());
 				k.setFile(g);
 			}
