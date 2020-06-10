@@ -2,6 +2,7 @@ package de.fhswf;
 
 import java.awt.BasicStroke;
 import java.awt.Color;
+import java.awt.Font;
 import java.awt.Graphics;
 import java.awt.Graphics2D;
 import java.awt.Point;
@@ -9,6 +10,7 @@ import java.awt.RenderingHints;
 import java.util.HashMap;
 import java.util.Map;
 
+import javax.swing.JOptionPane;
 import javax.swing.JPanel;
 
 public class Knoten extends JPanel{
@@ -33,6 +35,15 @@ public class Knoten extends JPanel{
 	}
 	
 	public void setFile(Graph g) {
+		if(graph != null) {
+			int result = JOptionPane.showConfirmDialog(null, "Soll der Graph in einem neuen Fenster geöffnet werden?");
+			if(result == 2) return;
+			if(result == 0) {
+				Main.openNewFrame(g);
+				return;
+			}
+		}
+		
 		graph = g;
 		iD = 80;
 		degreeC = 360;
@@ -53,7 +64,12 @@ public class Knoten extends JPanel{
 		g2d.fillRect(0, 0, getWidth(), getHeight());
 		g2d.setColor(Color.WHITE);
 		
-		if(graph == null) return;
+		if(graph == null) {
+			g2d.setFont(new Font("Serif", Font.BOLD, 20));
+			int width = g2d.getFontMetrics().stringWidth("Kein Graph ausgewählt!");
+			g2d.drawString("Kein Graph ausgewählt!", getWidth() / 2 - (width / 2), getHeight() / 2 - 50);
+			return;
+		}
 		
         for(int i = 0; i < graph.getAmountKnots(); i++) {
         	circlePos.put(i + 1, drawEcke(g2d, (i * degreeC)));

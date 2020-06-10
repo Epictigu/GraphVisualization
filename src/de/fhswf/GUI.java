@@ -18,13 +18,17 @@ public class GUI extends JFrame implements ActionListener {
 
 	public Knoten k;
 
-	public GUI() {
-		initWindow();
+	
+	
+	public GUI(Graph g) {
+		initWindow(g);
 	}
-
-	private void initWindow() {
+	
+	
+	
+	private void initWindow(Graph g) {
 		setTitle("GDI Projekt");
-		setDefaultCloseOperation(JFrame.EXIT_ON_CLOSE);
+		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
 		setSize(500, 650);
 		setResizable(false);
 		setLayout(null);
@@ -46,6 +50,7 @@ public class GUI extends JFrame implements ActionListener {
 
 		k = new Knoten();
 		k.setBounds(25, 146, 450, 450);
+		if(g != null)k.setFile(g);
 		add(k);
 
 		JPanel jp = new JPanel();
@@ -72,8 +77,8 @@ public class GUI extends JFrame implements ActionListener {
 			fc.setFileFilter(filter);
 
 			fc.setCurrentDirectory(new java.io.File("C:/"));
-			fc.setDialogTitle(".gdi Datei auswählen"); // Titel des Dateiexplorers ?
-			fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES); // glaube sollte nur files zeigen
+			fc.setDialogTitle(".gdi Datei auswählen");
+			fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
 				k.setFile(ReadFile.readFileScanner(fc.getSelectedFile().getAbsolutePath()));
 			}
