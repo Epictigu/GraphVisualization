@@ -4,10 +4,11 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 
-import javax.swing.JButton;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
-import javax.swing.JPanel;
+import javax.swing.JMenu;
+import javax.swing.JMenuBar;
+import javax.swing.JMenuItem;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -18,14 +19,10 @@ public class GUI extends JFrame implements ActionListener {
 
 	public Knoten k;
 
-	
-	
 	public GUI(Graph g) {
 		initWindow(g);
 	}
-	
-	
-	
+
 	private void initWindow(Graph g) {
 		setTitle("GDI Projekt");
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
@@ -50,20 +47,35 @@ public class GUI extends JFrame implements ActionListener {
 
 		k = new Knoten();
 		k.setBounds(25, 146, 450, 450);
-		if(g != null)k.setFile(g);
+		if (g != null)
+			k.setFile(g);
 		add(k);
 
-		JPanel jp = new JPanel();
-		jp.setBounds(0, 0, 500, 30);
-		jp.setBackground(Color.GRAY);
-		add(jp);
+		// TestMenu
+		JMenuBar menuBar;
+		JMenu menu, color;
+		JMenuItem selectFile, exitWindow;
 
-		JButton sFB = new JButton("Select File");
-		sFB.setBounds(0, 0, 100, 30);
-		sFB.setFocusPainted(false);
-		sFB.addActionListener(this);
-		sFB.setActionCommand("selectFile");
-		add(sFB);
+		menuBar = new JMenuBar();
+
+		// File
+		menu = new JMenu("File");
+
+		selectFile = new JMenuItem("Select File");
+		selectFile.addActionListener(this);
+		selectFile.setActionCommand("selectFile");
+		menu.add(selectFile);
+
+		exitWindow = new JMenuItem("Exit");
+		menu.add(exitWindow);
+
+		// Color
+		color = new JMenu("Color");
+
+		menuBar.add(menu);
+		menuBar.add(color);
+
+		setJMenuBar(menuBar);
 
 		setVisible(true);
 	}
