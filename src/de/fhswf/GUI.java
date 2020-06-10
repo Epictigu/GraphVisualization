@@ -9,6 +9,7 @@ import javax.swing.JFrame;
 import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
+import javax.swing.JOptionPane;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -25,12 +26,14 @@ public class GUI extends JFrame implements ActionListener {
 
 	private void initWindow(Graph g) {
 		setTitle("GDI Projekt");
+		if(g != null) setTitle(getTitle() + " - " +  g.getPath());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(500, 650);
+		setSize(500, 550);
 		setResizable(false);
 		setLayout(null);
 		setLocationRelativeTo(null); // setzt das Fenster in die Mitte des Bildschirms
-
+		setBounds(getX() + (25 * Main.guiList.size()), getY() + (25 * Main.guiList.size()), 500, 550);
+		
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
 		} catch (ClassNotFoundException e) {
@@ -46,7 +49,7 @@ public class GUI extends JFrame implements ActionListener {
 		getContentPane().setBackground(new Color(51, 51, 51));
 
 		k = new Knoten();
-		k.setBounds(25, 146, 450, 450);
+		k.setBounds(25, 46, 450, 450);
 		if (g != null)
 			k.setFile(g);
 		add(k);
@@ -92,7 +95,18 @@ public class GUI extends JFrame implements ActionListener {
 			fc.setDialogTitle(".gdi Datei auswählen");
 			fc.setFileSelectionMode(JFileChooser.FILES_AND_DIRECTORIES);
 			if (fc.showOpenDialog(this) == JFileChooser.APPROVE_OPTION) {
-				k.setFile(ReadFile.readFileScanner(fc.getSelectedFile().getAbsolutePath()));
+				if(k.graph != null) {
+					int result = JOptionPane.showConfirmDialog(null, "Soll der Graph in einem neuen Fenster geöffnet werden?");
+					if(result == 2) return;
+					if(result == 0) {
+						Main.openNewFrame(ReadFile.readFileScanner(fc.getSelectedFile().getAbsolutePath()));
+						return;
+					}
+				}
+				
+				Graph g = ReadFile.readFileScanner(fc.getSelectedFile().getAbsolutePath());
+				setTitle("GDI Projekt - " +  g.getPath());
+				k.setFile(g);
 			}
 
 		}

@@ -10,7 +10,7 @@ import java.util.Scanner;
 public class ReadFile {
 
 	public static Graph readFileScanner(String filename) {
-		Graph graph = new Graph();
+		Graph graph = new Graph(filename);
 		try {
 			File file = new File(filename);
 			Scanner scanner = new Scanner(file);
@@ -26,7 +26,7 @@ public class ReadFile {
 	}
 
 	public static Graph readFileBufferdReader(String filename) throws IOException {
-		Graph graph = new Graph();
+		Graph graph = new Graph(filename);
 		BufferedReader br = new BufferedReader(new FileReader(filename));
 		try {
 			String line = br.readLine();
