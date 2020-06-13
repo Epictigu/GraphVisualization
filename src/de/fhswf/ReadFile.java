@@ -64,7 +64,10 @@ public class ReadFile {
 			} else if (array[0].equals("V")) {
 				int indexKnots = Integer.parseInt(array[1]);
 				String name = array[2];
-				name = name.substring(1, name.length());
+				for(int i = 3; i < array.length; i++) {
+					name = name + " " + array[i];
+				}
+				name = name.substring(1, name.length() - 1);
 
 				graph.writeToKnotNames(indexKnots, name);
 			} else if (array[0].equals("E")) {

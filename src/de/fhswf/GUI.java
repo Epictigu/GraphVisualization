@@ -31,7 +31,7 @@ public class GUI extends JFrame implements ActionListener {
 		if (g != null)
 			setTitle(getTitle() + " - " + g.getPath());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(500, 550);
+		setSize(500, 500);
 		setResizable(false);
 		setLayout(null);
 		setLocationRelativeTo(null); // setzt das Fenster in die Mitte des Bildschirms
@@ -52,7 +52,7 @@ public class GUI extends JFrame implements ActionListener {
 		getContentPane().setBackground(new Color(51, 51, 51));
 
 		k = new Knoten();
-		k.setBounds(25, 46, 450, 450);
+		k.setBounds(0, 0, 493, 500);
 		if (g != null)
 			k.setFile(g);
 		k.setToolTipText("Platzhalter");
