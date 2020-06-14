@@ -97,7 +97,7 @@ public class GUI extends JFrame implements ActionListener {
 		customColors = new JMenu("Custom Colors");
 
 		ButtonGroup group = new ButtonGroup();
-		JRadioButtonMenuItem defaultTheme, darkTheme, wunderlandTheme, customTheme;
+		JRadioButtonMenuItem defaultTheme, darkTheme, wunderlandTheme, customTheme, iceTheme, orangeTheme;
 
 		defaultTheme = new JRadioButtonMenuItem("Default Color Theme");
 		defaultTheme.setSelected(true);
@@ -119,6 +119,20 @@ public class GUI extends JFrame implements ActionListener {
 		wunderlandTheme.setActionCommand("wunderlandTheme");
 		group.add(wunderlandTheme);
 		edit.add(wunderlandTheme);
+
+		iceTheme = new JRadioButtonMenuItem("Ice Color Theme");
+		iceTheme.setSelected(false);
+		iceTheme.addActionListener(this);
+		iceTheme.setActionCommand("iceTheme");
+		group.add(iceTheme);
+		edit.add(iceTheme);
+
+		orangeTheme = new JRadioButtonMenuItem("Orange Color Theme");
+		orangeTheme.setSelected(false);
+		orangeTheme.addActionListener(this);
+		orangeTheme.setActionCommand("orangeTheme");
+		group.add(orangeTheme);
+		edit.add(orangeTheme);
 
 		customTheme = new JRadioButtonMenuItem("Custom Color Theme");
 		customTheme.setSelected(false);
@@ -220,6 +234,26 @@ public class GUI extends JFrame implements ActionListener {
 			Color backgroundColor = new Color(43, 45, 66);
 			Color graphColor = new Color(239, 35, 60);
 			Color fontColor = new Color(237, 242, 244);
+			k.backgroundColor = backgroundColor;
+			k.mainColor = graphColor;
+			k.fontColor = fontColor;
+			k.repaint();
+		} else if (e.getActionCommand().equalsIgnoreCase("iceTheme")) {
+			allowCustomColors = false;
+			customColors.setEnabled(allowCustomColors);
+			Color backgroundColor = Color.WHITE;
+			Color graphColor = new Color(128, 255, 255);
+			Color fontColor = Color.WHITE;
+			k.backgroundColor = backgroundColor;
+			k.mainColor = graphColor;
+			k.fontColor = fontColor;
+			k.repaint();
+		} else if (e.getActionCommand().equalsIgnoreCase("orangeTheme")) {
+			allowCustomColors = false;
+			customColors.setEnabled(allowCustomColors);
+			Color backgroundColor = Color.WHITE;
+			Color graphColor = new Color(255, 96, 0);
+			Color fontColor = Color.WHITE;
 			k.backgroundColor = backgroundColor;
 			k.mainColor = graphColor;
 			k.fontColor = fontColor;
