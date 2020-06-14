@@ -15,13 +15,16 @@ import java.util.HashMap;
 import java.util.Map;
 
 import javax.swing.JPanel;
-import javax.swing.ToolTipManager;
 
 public class Knoten extends JPanel{
 
 	private static final long serialVersionUID = 2L;
 	
 	public Graph graph = null;
+	
+	public Colors backgroundColor = Colors.Grey,
+			mainColor = Colors.White,
+			fontColor = Colors.Black;
 	
 	private float degreeC = 360f;
 	private int iD = 80;
@@ -41,7 +44,6 @@ public class Knoten extends JPanel{
         if(g.getAmountKnots() > 1)
         	degreeC = 360f / g.getAmountKnots();
         
-        ToolTipManager.sharedInstance().registerComponent(this);
         addMouseListener(getMouseAdapter());
         addMouseMotionListener(getMouseAdapter());
         
@@ -157,7 +159,8 @@ public class Knoten extends JPanel{
         g2d.setFont(new Font("Serif", Font.BOLD, fontSize));
 		int cP = 0;
 		for(Point p : circlePos.values()) {
-			g2d.setColor(Color.WHITE);			cP++;
+			cP++;
+			g2d.setColor(Color.WHITE);
 			g2d.fillOval(p.x, p.y, iD, iD);
 			String knotName = graph.getKnotNames()[cP];
 			if(knotName.length() < 4) {
