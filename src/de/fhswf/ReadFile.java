@@ -34,12 +34,11 @@ public class ReadFile {
 		Graph graph = new Graph(filename);
 		BufferedReader br = new BufferedReader(new FileReader(filename));
 		try {
-			String line = br.readLine();
-
-			while (line != null) {
+			String line;
+			do {
 				line = br.readLine();
 				decodeLine(line, graph);
-			}
+			} while (line != null);
 		} finally {
 			br.close();
 		}
@@ -69,7 +68,7 @@ public class ReadFile {
 			} else if (array[0].equals("V")) {
 				int indexKnots = Integer.parseInt(array[1]);
 				String name = array[2];
-				for(int i = 3; i < array.length; i++) {
+				for (int i = 3; i < array.length; i++) {
 					name = name + " " + array[i];
 				}
 				name = name.substring(1, name.length() - 1);
