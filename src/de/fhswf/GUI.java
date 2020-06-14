@@ -5,6 +5,7 @@ import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
 
+import javax.swing.ButtonGroup;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -12,6 +13,7 @@ import javax.swing.JMenu;
 import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
+import javax.swing.JRadioButtonMenuItem;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -87,6 +89,39 @@ public class GUI extends JFrame implements ActionListener {
 		// Edit
 		edit = new JMenu("Edit");
 
+		ButtonGroup group = new ButtonGroup();
+		JRadioButtonMenuItem defaultTheme, darkTheme, wunderlandTheme, customTheme;
+
+		defaultTheme = new JRadioButtonMenuItem("Default Color Theme");
+		defaultTheme.setSelected(true);
+		defaultTheme.addActionListener(this);
+		defaultTheme.setActionCommand("defaultTheme");
+		group.add(defaultTheme);
+		edit.add(defaultTheme);
+
+		darkTheme = new JRadioButtonMenuItem("Dark Color Theme");
+		darkTheme.setSelected(false);
+		darkTheme.addActionListener(this);
+		darkTheme.setActionCommand("darkTheme");
+		group.add(darkTheme);
+		edit.add(darkTheme);
+
+		wunderlandTheme = new JRadioButtonMenuItem("Wunderland Color Theme");
+		wunderlandTheme.setSelected(false);
+		wunderlandTheme.addActionListener(this);
+		wunderlandTheme.setActionCommand("wunderlandTheme");
+		group.add(wunderlandTheme);
+		edit.add(wunderlandTheme);
+
+		customTheme = new JRadioButtonMenuItem("Custom Color Theme");
+		customTheme.setSelected(false);
+		customTheme.addActionListener(this);
+		customTheme.setActionCommand("customTheme");
+		group.add(customTheme);
+		edit.add(customTheme);
+
+		edit.addSeparator();
+
 		backgroundcolor = new JMenuItem("Backgroundcolor");
 		backgroundcolor.addActionListener(this);
 		backgroundcolor.setActionCommand("backgroundcolor");
@@ -143,7 +178,38 @@ public class GUI extends JFrame implements ActionListener {
 				k.setFile(g);
 			}
 
-		} else if (e.getActionCommand().equalsIgnoreCase("backgroundcolor")) {
+		} else if (e.getActionCommand().equalsIgnoreCase("defaultTheme")) {
+			Color backgroundColor = new Color(51, 51, 51);
+			Color graphColor = Color.WHITE;
+			Color fontColor = Color.BLACK;
+			// k.backgroundColor = backgroundColor;
+			// k.mainColor = graphColor;
+			// k.fontColor = fontColor;
+		} else if (e.getActionCommand().equalsIgnoreCase("darkTheme")) {
+			Color backgroundColor = Color.BLACK;
+			Color graphColor = new Color(51, 51, 51);
+			Color fontColor = new Color(20, 20, 20);
+			// k.backgroundColor = backgroundColor;
+			// k.mainColor = graphColor;
+			// k.fontColor = fontColor;
+		} else if (e.getActionCommand().equalsIgnoreCase("wunderlandTheme")) {
+			Color backgroundColor = new Color(43, 45, 66);
+			Color graphColor = new Color(217, 4, 41);
+			Color fontColor = new Color(237, 242, 244);
+			// k.backgroundColor = backgroundColor;
+			// k.mainColor = graphColor;
+			// k.fontColor = fontColor;
+		} else if (e.getActionCommand().equalsIgnoreCase("customTheme")) {
+			Color backgroundColor = new Color(51, 51, 51);
+			Color graphColor = Color.WHITE;
+			Color fontColor = Color.BLACK;
+			// k.backgroundColor = backgroundColor;
+			// k.mainColor = graphColor;
+			// k.fontColor = fontColor;
+		}
+		//////////////////////////////////////// Custom
+		//////////////////////////////////////// Colors////////////////////////////////////////////////////
+		else if (e.getActionCommand().equalsIgnoreCase("backgroundcolor")) {
 			Color newColor = JColorChooser.showDialog(this, "Choose a Background Color", Colors.Black.color);
 			if (newColor != null) {
 
