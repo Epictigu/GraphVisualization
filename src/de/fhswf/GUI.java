@@ -61,7 +61,7 @@ public class GUI extends JFrame implements ActionListener {
 		// TestMenu
 		JMenuBar menuBar;
 		JMenu menu, edit;
-		JMenuItem selectFile, exitWindow, colorChooser;
+		JMenuItem selectFile, exitWindow, colorChooser, openWindow, backgroundcolor, graphcolor, fontcolor;
 
 		menuBar = new JMenuBar();
 
@@ -73,6 +73,11 @@ public class GUI extends JFrame implements ActionListener {
 		selectFile.setActionCommand("selectFile");
 		menu.add(selectFile);
 
+		openWindow = new JMenuItem("New Window");
+		openWindow.addActionListener(this);
+		openWindow.setActionCommand("openWindow");
+		menu.add(openWindow);
+
 		exitWindow = new JMenuItem("Exit");
 
 		menu.addSeparator();
@@ -82,10 +87,20 @@ public class GUI extends JFrame implements ActionListener {
 		// Edit
 		edit = new JMenu("Edit");
 
-		colorChooser = new JMenuItem("ColorChooser");
-		colorChooser.addActionListener(this);
-		colorChooser.setActionCommand("colorChooser");
-		edit.add(colorChooser);
+		backgroundcolor = new JMenuItem("Backgroundcolor");
+		backgroundcolor.addActionListener(this);
+		backgroundcolor.setActionCommand("backgroundcolor");
+		edit.add(backgroundcolor);
+
+		graphcolor = new JMenuItem("Graphcolor");
+		graphcolor.addActionListener(this);
+		graphcolor.setActionCommand("graphcolor");
+		edit.add(graphcolor);
+
+		fontcolor = new JMenuItem("Fontcolor");
+		fontcolor.addActionListener(this);
+		fontcolor.setActionCommand("fontcolor");
+		edit.add(fontcolor);
 
 		menuBar.add(menu);
 		edit.add(edit);
@@ -128,10 +143,23 @@ public class GUI extends JFrame implements ActionListener {
 				k.setFile(g);
 			}
 
-		} else if (e.getActionCommand().equalsIgnoreCase("colorChooser")) {
-			Color newColor = JColorChooser.showDialog(this, "Choose Background Color", Colors.Black.color);
+		} else if (e.getActionCommand().equalsIgnoreCase("backgroundcolor")) {
+			Color newColor = JColorChooser.showDialog(this, "Choose a Background Color", Colors.Black.color);
 			if (newColor != null) {
+
 			}
+		} else if (e.getActionCommand().equalsIgnoreCase("graphcolor")) {
+			Color newColor = JColorChooser.showDialog(this, "Choose a Graph Color", Colors.White.color);
+			if (newColor != null) {
+
+			}
+		} else if (e.getActionCommand().equalsIgnoreCase("fontcolor")) {
+			Color newColor = JColorChooser.showDialog(this, "Choose Font Color", Colors.Black.color);
+			if (newColor != null) {
+
+			}
+		} else if (e.getActionCommand().equalsIgnoreCase("openWindow")) {
+			Main.openNewFrame(null);
 		}
 	}
 }
