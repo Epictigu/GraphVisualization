@@ -1,7 +1,6 @@
 package de.fhswf;
 
 import java.awt.BasicStroke;
-import java.awt.Color;
 import java.awt.Cursor;
 import java.awt.Font;
 import java.awt.Graphics;
@@ -131,9 +130,9 @@ public class Knoten extends JPanel{
 		g2d.setRenderingHint(
 		        RenderingHints.KEY_ANTIALIASING,
 		        RenderingHints.VALUE_ANTIALIAS_ON);
-		g2d.setColor(new Color(51,51,51));
+		g2d.setColor(backgroundColor.color);
 		g2d.fillRect(0, 0, getWidth(), getHeight());
-		g2d.setColor(Color.WHITE);
+		g2d.setColor(mainColor.color);
 		
 		
 		if(graph == null) {
@@ -160,11 +159,11 @@ public class Knoten extends JPanel{
 		int cP = 0;
 		for(Point p : circlePos.values()) {
 			cP++;
-			g2d.setColor(Color.WHITE);
+			g2d.setColor(mainColor.color);
 			g2d.fillOval(p.x, p.y, iD, iD);
 			String knotName = graph.getKnotNames()[cP];
 			if(knotName.length() < 4) {
-				g2d.setColor(Color.BLACK);
+				g2d.setColor(fontColor.color);
 				Rectangle2D bounds = g2d.getFontMetrics().getStringBounds(knotName, g2d);
 				g2d.drawString(knotName, (int) (p.x + iD / 2 - bounds.getWidth() / 2), (int) (p.y + iD / 2 + bounds.getHeight() / 4));
 			}
