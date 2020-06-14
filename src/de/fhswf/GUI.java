@@ -6,6 +6,7 @@ import java.awt.event.ActionListener;
 import java.io.File;
 
 import javax.swing.ButtonGroup;
+import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
 import javax.swing.JFileChooser;
 import javax.swing.JFrame;
@@ -25,6 +26,12 @@ public class GUI extends JFrame implements ActionListener {
 	private static final long serialVersionUID = 1L;
 
 	public GraphPainter k;
+
+	private JMenuBar menuBar;
+	private JMenu menu, edit, customColors;
+	private JMenuItem selectFile, exitWindow, colorChooser, openWindow, backgroundcolor, graphcolor, fontcolor;
+
+	private boolean allowCustomColors = false;
 
 	public GUI(Graph g) {
 		initWindow(g);
@@ -62,34 +69,32 @@ public class GUI extends JFrame implements ActionListener {
 		k.setToolTipText("Platzhalter");
 		add(k);
 
-		// TestMenu
-		JMenuBar menuBar;
-		JMenu menu, edit;
-		JMenuItem selectFile, exitWindow, colorChooser, openWindow, backgroundcolor, graphcolor, fontcolor;
-
 		menuBar = new JMenuBar();
 
 		// File
 		menu = new JMenu("File");
 
-		selectFile = new JMenuItem("Select File");
+		selectFile = new JMenuItem("Select File", new ImageIcon("res/folder.png"));
 		selectFile.addActionListener(this);
 		selectFile.setActionCommand("selectFile");
 		menu.add(selectFile);
 
-		openWindow = new JMenuItem("New Window");
+		openWindow = new JMenuItem("New Window", new ImageIcon("res/newWindow.png"));
 		openWindow.addActionListener(this);
 		openWindow.setActionCommand("openWindow");
 		menu.add(openWindow);
 
-		exitWindow = new JMenuItem("Exit");
-
 		menu.addSeparator();
 
+		exitWindow = new JMenuItem("Exit");
+		exitWindow.addActionListener(this);
+		exitWindow.setActionCommand("exitWindow");
 		menu.add(exitWindow);
 
-		// Edit
+		// --------------------------------- Edit -------------------------
 		edit = new JMenu("Edit");
+
+		customColors = new JMenu("Custom Colors");
 
 		ButtonGroup group = new ButtonGroup();
 		JRadioButtonMenuItem defaultTheme, darkTheme, wunderlandTheme, customTheme;
@@ -124,20 +129,26 @@ public class GUI extends JFrame implements ActionListener {
 
 		edit.addSeparator();
 
+		// ----------------------------- Custom ------------------------------
+		edit.add(customColors);
+		ImageIcon colorWheelIcon = new ImageIcon("res/colorWheel.gif");
+		customColors.setIcon(colorWheelIcon);
+		customColors.setEnabled(allowCustomColors);
+
 		backgroundcolor = new JMenuItem("Backgroundcolor");
 		backgroundcolor.addActionListener(this);
 		backgroundcolor.setActionCommand("backgroundcolor");
-		edit.add(backgroundcolor);
+		customColors.add(backgroundcolor);
 
 		graphcolor = new JMenuItem("Graphcolor");
 		graphcolor.addActionListener(this);
 		graphcolor.setActionCommand("graphcolor");
-		edit.add(graphcolor);
+		customColors.add(graphcolor);
 
 		fontcolor = new JMenuItem("Fontcolor");
 		fontcolor.addActionListener(this);
 		fontcolor.setActionCommand("fontcolor");
-		edit.add(fontcolor);
+		customColors.add(fontcolor);
 
 		menuBar.add(menu);
 		edit.add(edit);
@@ -150,6 +161,7 @@ public class GUI extends JFrame implements ActionListener {
 
 	@Override
 	public void actionPerformed(ActionEvent e) {
+		// ------------------------------- SelectFile ------------------------------
 		if (e.getActionCommand().equalsIgnoreCase("selectFile")) {
 
 			JFileChooser fc = new JFileChooser();
@@ -180,54 +192,65 @@ public class GUI extends JFrame implements ActionListener {
 				k.setFile(g);
 			}
 
-		} else if (e.getActionCommand().equalsIgnoreCase("defaultTheme")) {
-			Color backgroundColor = new Color(51, 51, 51);
-			Color graphColor = Color.WHITE;
-			Color fontColor = Color.BLACK;
-			// k.backgroundColor = backgroundColor;
-			// k.mainColor = graphColor;
-			// k.fontColor = fontColor;
-		} else if (e.getActionCommand().equalsIgnoreCase("darkTheme")) {
-			Color backgroundColor = Color.BLACK;
-			Color graphColor = new Color(51, 51, 51);
-			Color fontColor = new Color(20, 20, 20);
-			// k.backgroundColor = backgroundColor;
-			// k.mainColor = graphColor;
-			// k.fontColor = fontColor;
-		} else if (e.getActionCommand().equalsIgnoreCase("wunderlandTheme")) {
-			Color backgroundColor = new Color(43, 45, 66);
-			Color graphColor = new Color(217, 4, 41);
-			Color fontColor = new Color(237, 242, 244);
-			// k.backgroundColor = backgroundColor;
-			// k.mainColor = graphColor;
-			// k.fontColor = fontColor;
-		} else if (e.getActionCommand().equalsIgnoreCase("customTheme")) {
-			Color backgroundColor = new Color(51, 51, 51);
-			Color graphColor = Color.WHITE;
-			Color fontColor = Color.BLACK;
-			// k.backgroundColor = backgroundColor;
-			// k.mainColor = graphColor;
-			// k.fontColor = fontColor;
 		}
-		//////////////////////////////////////// Custom
-		//////////////////////////////////////// Colors////////////////////////////////////////////////////
-		else if (e.getActionCommand().equalsIgnoreCase("backgroundcolor")) {
+		// ---------------------------- ColorThemes ------------------------
+		else if (e.getActionCommand().equalsIgnoreCase("defaultTheme")) {
+			allowCustomColors = false;
+			customColors.setEnabled(allowCustomColors);
+			Color backgroundColor = new Color(51, 51, 51);
+			Color graphColor = Color.WHITE;
+			Color fontColor = Color.BLACK;
+			k.backgroundColor = backgroundColor;
+			k.mainColor = graphColor;
+			k.fontColor = fontColor;
+			k.repaint();
+		} else if (e.getActionCommand().equalsIgnoreCase("darkTheme")) {
+			allowCustomColors = false;
+			customColors.setEnabled(allowCustomColors);
+			Color backgroundColor = Color.BLACK;
+			Color graphColor = new Color(100, 100, 100);
+			Color fontColor = Color.BLACK;
+			k.backgroundColor = backgroundColor;
+			k.mainColor = graphColor;
+			k.fontColor = fontColor;
+			k.repaint();
+		} else if (e.getActionCommand().equalsIgnoreCase("wunderlandTheme")) {
+			allowCustomColors = false;
+			customColors.setEnabled(allowCustomColors);
+			Color backgroundColor = new Color(43, 45, 66);
+			Color graphColor = new Color(239, 35, 60);
+			Color fontColor = new Color(237, 242, 244);
+			k.backgroundColor = backgroundColor;
+			k.mainColor = graphColor;
+			k.fontColor = fontColor;
+			k.repaint();
+		} else if (e.getActionCommand().equalsIgnoreCase("customTheme")) {
+			allowCustomColors = true;
+			customColors.setEnabled(allowCustomColors);
+		}
+		// --------------------------------CustomColors--------------------------------
+		else if (e.getActionCommand().equalsIgnoreCase("backgroundcolor") && allowCustomColors) {
 			Color newColor = JColorChooser.showDialog(this, "Choose a Background Color", new Color(51, 51, 51));
 			if (newColor != null) {
-
+				k.backgroundColor = newColor;
+				k.repaint();
 			}
-		} else if (e.getActionCommand().equalsIgnoreCase("graphcolor")) {
+		} else if (e.getActionCommand().equalsIgnoreCase("graphcolor") && allowCustomColors) {
 			Color newColor = JColorChooser.showDialog(this, "Choose a Graph Color", Color.WHITE);
 			if (newColor != null) {
-
+				k.mainColor = newColor;
+				k.repaint();
 			}
-		} else if (e.getActionCommand().equalsIgnoreCase("fontcolor")) {
+		} else if (e.getActionCommand().equalsIgnoreCase("fontcolor") && allowCustomColors) {
 			Color newColor = JColorChooser.showDialog(this, "Choose Font Color", Color.BLACK);
 			if (newColor != null) {
-
+				k.fontColor = newColor;
+				k.repaint();
 			}
-		} else if (e.getActionCommand().equalsIgnoreCase("openWindow")) {
+		} else if (e.getActionCommand().equalsIgnoreCase("openWindow") && allowCustomColors) {
 			Main.openNewFrame(null);
+		} else if (e.getActionCommand().equalsIgnoreCase("exitWindow")) {
+			// Exit Windows hinzufuegen
 		}
 	}
 }
