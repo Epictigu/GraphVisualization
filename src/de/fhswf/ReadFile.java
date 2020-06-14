@@ -5,6 +5,7 @@ import java.io.File;
 import java.io.FileNotFoundException;
 import java.io.FileReader;
 import java.io.IOException;
+import java.util.Locale;
 import java.util.Scanner;
 
 public class ReadFile {
@@ -13,7 +14,9 @@ public class ReadFile {
 		Graph graph = new Graph(filename);
 		try {
 			File file = new File(filename);
-			Scanner scanner = new Scanner(file);
+			Locale loc = new Locale("de", "DE");
+			Scanner scanner = new Scanner(file, "UTF-8");
+			scanner.useLocale(loc);
 			while (scanner.hasNextLine()) {
 				String line = scanner.nextLine();
 				decodeLine(line, graph);
