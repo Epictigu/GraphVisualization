@@ -3,6 +3,8 @@ package de.fhswf;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fhswf.utils.Graph;
+
 public class Main {
 	
 	public static List<GUI> guiList = new ArrayList<GUI>();

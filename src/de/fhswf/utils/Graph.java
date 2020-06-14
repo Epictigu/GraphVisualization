@@ -1,4 +1,4 @@
-package de.fhswf;
+package de.fhswf.utils;
 
 public class Graph {
 	private int amountKnots;
@@ -8,10 +8,10 @@ public class Graph {
 	private String path;
 	
 	
-	
 	public Graph(String path) {
 		this.path = path;
 	}
+	
 
 	public void init(int amountKnots) {
 		this.amountKnots = amountKnots;
@@ -42,5 +42,5 @@ public class Graph {
 	public String getPath() {
 		return path;
 	}
-
+	
 }

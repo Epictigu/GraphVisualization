@@ -8,6 +8,8 @@ import java.io.IOException;
 import java.util.Locale;
 import java.util.Scanner;
 
+import de.fhswf.utils.Graph;
+
 public class ReadFile {
 
 	public static Graph readFileScanner(String filename) {
