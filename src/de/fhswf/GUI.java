@@ -18,11 +18,13 @@ import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.fhswf.utils.Graph;
+
 public class GUI extends JFrame implements ActionListener {
 
 	private static final long serialVersionUID = 1L;
 
-	public Knoten k;
+	public GraphPainter k;
 
 	public GUI(Graph g) {
 		initWindow(g);
@@ -53,7 +55,7 @@ public class GUI extends JFrame implements ActionListener {
 
 		getContentPane().setBackground(new Color(51, 51, 51));
 
-		k = new Knoten();
+		k = new GraphPainter();
 		k.setBounds(0, 0, 493, 500);
 		if (g != null)
 			k.setFile(g);
@@ -210,17 +212,17 @@ public class GUI extends JFrame implements ActionListener {
 		//////////////////////////////////////// Custom
 		//////////////////////////////////////// Colors////////////////////////////////////////////////////
 		else if (e.getActionCommand().equalsIgnoreCase("backgroundcolor")) {
-			Color newColor = JColorChooser.showDialog(this, "Choose a Background Color", Colors.Black.color);
+			Color newColor = JColorChooser.showDialog(this, "Choose a Background Color", new Color(51, 51, 51));
 			if (newColor != null) {
 
 			}
 		} else if (e.getActionCommand().equalsIgnoreCase("graphcolor")) {
-			Color newColor = JColorChooser.showDialog(this, "Choose a Graph Color", Colors.White.color);
+			Color newColor = JColorChooser.showDialog(this, "Choose a Graph Color", Color.WHITE);
 			if (newColor != null) {
 
 			}
 		} else if (e.getActionCommand().equalsIgnoreCase("fontcolor")) {
-			Color newColor = JColorChooser.showDialog(this, "Choose Font Color", Colors.Black.color);
+			Color newColor = JColorChooser.showDialog(this, "Choose Font Color", Color.BLACK);
 			if (newColor != null) {
 
 			}
