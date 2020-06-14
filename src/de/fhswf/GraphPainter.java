@@ -161,9 +161,26 @@ public class GraphPainter extends JPanel{
 			g2d.drawString("Kein Graph ausgew‰hlt!", getWidth() / 2 - (width / 2), getHeight() / 2 - 15);
 			return;
 		}
+		
+		if(graph.getAmountKnots() > 30) {
+			g2d.setFont(new Font("Serif", Font.BOLD, 20));
+			int width = g2d.getFontMetrics().stringWidth("Der gew‰hlte Graph ist zu groﬂ!");
+			g2d.drawString("Der gew‰hlte Graph ist zu groﬂ!", getWidth() / 2 - (width / 2), getHeight() / 2 - 15);
+			return;
+		}
         
         g2d.setStroke(new BasicStroke(2.5f - (graph.getAmountKnots() / 20f)));
         for(Kanten k : edgeList) {
+        	g2d.setColor(mainColor);
+        	for(Kanten k2 : edgeList) {
+        		if(k != k2) {
+        			if(!(k.k1 == k2.k1 || k.k1 == k2.k2 || k.k2 == k2.k1 || k.k2 == k2.k2)) {
+        				if(k.schneidetMit(k2, iD)) {
+        					g2d.setColor(Color.RED);
+        				}
+        			}
+        		}
+        	}
         	drawKante(g2d, k);
         }
 		

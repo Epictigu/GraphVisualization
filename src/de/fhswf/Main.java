@@ -23,5 +23,16 @@ public class Main {
 		
 		new Thread(r).start();
 	}
+	
+	public static void openNewFrame(Graph g, int width, int height) {
+		Runnable r = new Runnable() {
+			@Override
+			public void run() {
+				guiList.add(new GUI(g, width, height));
+			}
+		};
+		
+		new Thread(r).start();
+	}
 
 }

@@ -15,6 +15,7 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -34,19 +35,23 @@ public class GUI extends JFrame implements ActionListener {
 	private boolean allowCustomColors = false;
 
 	public GUI(Graph g) {
-		initWindow(g);
+		initWindow(g, 500, 500);
+	}
+	
+	public GUI(Graph g, int width, int height) {
+		initWindow(g, width, height);
 	}
 
-	private void initWindow(Graph g) {
+	private void initWindow(Graph g, int width, int height) {
 		setTitle("GDI Projekt");
 		if (g != null)
 			setTitle(getTitle() + " - " + g.getPath());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(500, 500);
+		setSize(width, height + 50);
 		setResizable(false);
 		setLayout(null);
 		setLocationRelativeTo(null); // setzt das Fenster in die Mitte des Bildschirms
-		setBounds(getX() + (25 * Main.guiList.size()), getY() + (25 * Main.guiList.size()), 500, 550);
+		setBounds(getX() + (25 * Main.guiList.size()), getY() + (25 * Main.guiList.size()), width, height + 50);
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -63,7 +68,7 @@ public class GUI extends JFrame implements ActionListener {
 		getContentPane().setBackground(new Color(51, 51, 51));
 
 		k = new GraphPainter();
-		k.setBounds(0, 0, 493, 500);
+		k.setBounds(0, 0, width - 7, height);
 		if (g != null)
 			k.setFile(g);
 		k.setToolTipText("Platzhalter");
@@ -197,7 +202,20 @@ public class GUI extends JFrame implements ActionListener {
 					if (result == 2)
 						return;
 					if (result == 0) {
-						Main.openNewFrame(g);
+						String[] options = {"Klein", "Mittel", "Groß"};
+						int x = JOptionPane.showOptionDialog(null, "Bitte wählen Sie eine Fenstergröße:", "Fenstergröße",
+								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+						switch(x) {
+						case 0:
+							Main.openNewFrame(g);
+							break;
+						case 1:
+							Main.openNewFrame(g, 750, 750);
+							break;
+						case 2:
+							Main.openNewFrame(g, 1000, 1000);
+							break;
+						}
 						return;
 					}
 				}
@@ -282,7 +300,20 @@ public class GUI extends JFrame implements ActionListener {
 				k.repaint();
 			}
 		} else if (e.getActionCommand().equalsIgnoreCase("openWindow")) {
-			Main.openNewFrame(null);
+			String[] options = {"Klein", "Mittel", "Groß"};
+			int x = JOptionPane.showOptionDialog(null, "Bitte wählen Sie eine Fenstergröße:", "Fenstergröße",
+					JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
+			switch(x) {
+			case 0:
+				Main.openNewFrame(null);
+				break;
+			case 1:
+				Main.openNewFrame(null, 750, 750);
+				break;
+			case 2:
+				Main.openNewFrame(null, 1000, 1000);
+				break;
+			}
 		} else if (e.getActionCommand().equalsIgnoreCase("exitWindow")) {
 			// Exit Windows hinzufuegen
 		}
