@@ -247,7 +247,7 @@ public class GUI extends JFrame implements ActionListener {
 				k.fontColor = newColor;
 				k.repaint();
 			}
-		} else if (e.getActionCommand().equalsIgnoreCase("openWindow") && allowCustomColors) {
+		} else if (e.getActionCommand().equalsIgnoreCase("openWindow")) {
 			Main.openNewFrame(null);
 		} else if (e.getActionCommand().equalsIgnoreCase("exitWindow")) {
 			// Exit Windows hinzufuegen
