@@ -3,6 +3,7 @@ package de.fhswf;
 import java.util.ArrayList;
 import java.util.List;
 
+import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 
 public class Main {
@@ -14,21 +15,14 @@ public class Main {
 	}
 	
 	public static void openNewFrame(Graph g) {
-		Runnable r = new Runnable() {
-			@Override
-			public void run() {
-				guiList.add(new GUI(g));
-			}
-		};
-		
-		new Thread(r).start();
+		openNewFrame(g, FrameSize.Small);
 	}
 	
-	public static void openNewFrame(Graph g, int width, int height) {
+	public static void openNewFrame(Graph g, FrameSize size) {
 		Runnable r = new Runnable() {
 			@Override
 			public void run() {
-				guiList.add(new GUI(g, width, height));
+				guiList.add(new GUI(g, size));
 			}
 		};
 		

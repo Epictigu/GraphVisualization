@@ -4,7 +4,9 @@ import java.awt.Color;
 import java.awt.event.ActionEvent;
 import java.awt.event.ActionListener;
 import java.io.File;
+import java.io.IOException;
 
+import javax.imageio.ImageIO;
 import javax.swing.ButtonGroup;
 import javax.swing.ImageIcon;
 import javax.swing.JColorChooser;
@@ -15,13 +17,17 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
+import javax.swing.JSlider;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
+import javax.swing.event.ChangeEvent;
+import javax.swing.event.ChangeListener;
 import javax.swing.filechooser.FileNameExtensionFilter;
 
+import de.fhswf.utils.FrameSize;
 import de.fhswf.utils.Graph;
 
-public class GUI extends JFrame implements ActionListener {
+public class GUI extends JFrame implements ActionListener, ChangeListener {
 
 	private static final long serialVersionUID = 1L;
 
@@ -29,29 +35,29 @@ public class GUI extends JFrame implements ActionListener {
 
 	private JMenuBar menuBar;
 	private JMenu menu, edit, customColors;
-	private JMenuItem selectFile, exitWindow, colorChooser, openWindow, backgroundcolor, graphcolor, fontcolor,
+	private JMenuItem selectFile, exitWindow, openWindow, backgroundcolor, graphcolor, fontcolor,
 			overlappingEdgeColor;
 
 	private boolean allowCustomColors = false;
-
+	
 	public GUI(Graph g) {
-		initWindow(g, 500, 500);
+		initWindow(g, FrameSize.Small);
 	}
 
-	public GUI(Graph g, int width, int height) {
-		initWindow(g, width, height);
+	public GUI(Graph g, FrameSize size) {
+		initWindow(g, size);
 	}
 
-	private void initWindow(Graph g, int width, int height) {
+	private void initWindow(Graph g, FrameSize size) {
 		setTitle("GDI Projekt");
 		if (g != null)
 			setTitle(getTitle() + " - " + g.getPath());
 		setDefaultCloseOperation(JFrame.DISPOSE_ON_CLOSE);
-		setSize(width, height + 50);
+		setSize(size.width, size.height + 50);
 		setResizable(false);
 		setLayout(null);
 		setLocationRelativeTo(null); // setzt das Fenster in die Mitte des Bildschirms
-		setBounds(getX() + (25 * Main.guiList.size()), getY() + (25 * Main.guiList.size()), width, height + 50);
+		setBounds(getX() + (25 * Main.guiList.size()), getY() + (25 * Main.guiList.size()), size.width, size.height + 50);
 
 		try {
 			UIManager.setLookAndFeel(UIManager.getSystemLookAndFeelClassName());
@@ -67,8 +73,8 @@ public class GUI extends JFrame implements ActionListener {
 
 		getContentPane().setBackground(new Color(51, 51, 51));
 
-		k = new GraphPainter();
-		k.setBounds(0, 0, width - 7, height);
+		k = new GraphPainter(size);
+		k.setBounds(0, 0, size.width - 7, size.height);
 		if (g != null)
 			k.setFile(g);
 		k.setToolTipText("Platzhalter");
@@ -79,15 +85,28 @@ public class GUI extends JFrame implements ActionListener {
 		// File
 		menu = new JMenu("File");
 
-		selectFile = new JMenuItem("Select File", new ImageIcon("res/folder.png"));
-		selectFile.addActionListener(this);
-		selectFile.setActionCommand("selectFile");
-		menu.add(selectFile);
+		try {
+			selectFile = new JMenuItem("Select File", new ImageIcon(ImageIO.read(getClass().getResource("resources/folder.png"))));
+			selectFile.addActionListener(this);
+			selectFile.setActionCommand("selectFile");
+			menu.add(selectFile);
+		} catch (IOException e1) {
+			e1.printStackTrace();
+		}
 
-		openWindow = new JMenuItem("New Window", new ImageIcon("res/newWindow.png"));
-		openWindow.addActionListener(this);
-		openWindow.setActionCommand("openWindow");
-		menu.add(openWindow);
+		try {
+			openWindow = new JMenuItem("New Window", new ImageIcon(ImageIO.read(getClass().getResource("resources/newWindow.png"))));
+			openWindow.addActionListener(this);
+			openWindow.setActionCommand("openWindow");
+			menu.add(openWindow);
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+		
+		JMenuItem reset = new JMenuItem("Reset Graph");
+		reset.addActionListener(this);
+		reset.setActionCommand("reset");
+		menu.add(reset);
 
 		menu.addSeparator();
 
@@ -150,8 +169,6 @@ public class GUI extends JFrame implements ActionListener {
 
 		// ----------------------------- Custom ------------------------------
 		edit.add(customColors);
-		ImageIcon colorWheelIcon = new ImageIcon("res/colorWheel.gif");
-		customColors.setIcon(colorWheelIcon);
 		customColors.setEnabled(allowCustomColors);
 
 		backgroundcolor = new JMenuItem("Backgroundcolor");
@@ -176,6 +193,20 @@ public class GUI extends JFrame implements ActionListener {
 
 		menuBar.add(menu);
 		edit.add(edit);
+
+		edit.addSeparator();
+
+		JMenu knG = new JMenu("Knotengröße");
+		edit.add(knG);
+
+		JSlider slider = new JSlider(50, 150);
+		slider.setMajorTickSpacing(50);
+		slider.setMinorTickSpacing(10);
+		slider.setPaintTicks(true);
+		slider.setPaintLabels(true);
+		slider.addChangeListener(this);
+		knG.add(slider);
+
 		menuBar.add(edit);
 
 		setJMenuBar(menuBar);
@@ -216,10 +247,10 @@ public class GUI extends JFrame implements ActionListener {
 							Main.openNewFrame(g);
 							break;
 						case 1:
-							Main.openNewFrame(g, 750, 750);
+							Main.openNewFrame(g, FrameSize.Medium);
 							break;
 						case 2:
-							Main.openNewFrame(g, 1000, 1000);
+							Main.openNewFrame(g, FrameSize.Large);
 							break;
 						}
 						return;
@@ -332,14 +363,25 @@ public class GUI extends JFrame implements ActionListener {
 				Main.openNewFrame(null);
 				break;
 			case 1:
-				Main.openNewFrame(null, 750, 750);
+				Main.openNewFrame(null, FrameSize.Medium);
 				break;
 			case 2:
-				Main.openNewFrame(null, 1000, 1000);
+				Main.openNewFrame(null, FrameSize.Large);
 				break;
 			}
 		} else if (e.getActionCommand().equalsIgnoreCase("exitWindow")) {
-			// Exit Windows hinzufuegen
+			dispose();
+		} else if (e.getActionCommand().equalsIgnoreCase("reset")) {
+			k.reset();
 		}
 	}
+	
+	@Override
+	public void stateChanged(ChangeEvent e) {
+		JSlider js = (JSlider) e.getSource();
+		
+		k.size = (0.0 + js.getValue()) / 100;
+		k.repaint();
+	}
+	
 }
