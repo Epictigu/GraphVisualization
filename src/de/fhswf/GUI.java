@@ -15,7 +15,6 @@ import javax.swing.JMenuBar;
 import javax.swing.JMenuItem;
 import javax.swing.JOptionPane;
 import javax.swing.JRadioButtonMenuItem;
-import javax.swing.JTextField;
 import javax.swing.UIManager;
 import javax.swing.UnsupportedLookAndFeelException;
 import javax.swing.filechooser.FileNameExtensionFilter;
@@ -30,14 +29,15 @@ public class GUI extends JFrame implements ActionListener {
 
 	private JMenuBar menuBar;
 	private JMenu menu, edit, customColors;
-	private JMenuItem selectFile, exitWindow, colorChooser, openWindow, backgroundcolor, graphcolor, fontcolor;
+	private JMenuItem selectFile, exitWindow, colorChooser, openWindow, backgroundcolor, graphcolor, fontcolor,
+			overlappingEdgeColor;
 
 	private boolean allowCustomColors = false;
 
 	public GUI(Graph g) {
 		initWindow(g, 500, 500);
 	}
-	
+
 	public GUI(Graph g, int width, int height) {
 		initWindow(g, width, height);
 	}
@@ -169,6 +169,11 @@ public class GUI extends JFrame implements ActionListener {
 		fontcolor.setActionCommand("fontcolor");
 		customColors.add(fontcolor);
 
+		overlappingEdgeColor = new JMenuItem("Intersectioncolor");
+		overlappingEdgeColor.addActionListener(this);
+		overlappingEdgeColor.setActionCommand("overlappingEdgeColor");
+		customColors.add(overlappingEdgeColor);
+
 		menuBar.add(menu);
 		edit.add(edit);
 		menuBar.add(edit);
@@ -202,10 +207,11 @@ public class GUI extends JFrame implements ActionListener {
 					if (result == 2)
 						return;
 					if (result == 0) {
-						String[] options = {"Klein", "Mittel", "Groß"};
-						int x = JOptionPane.showOptionDialog(null, "Bitte wählen Sie eine Fenstergröße:", "Fenstergröße",
-								JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-						switch(x) {
+						String[] options = { "Klein", "Mittel", "Groß" };
+						int x = JOptionPane.showOptionDialog(null, "Bitte wählen Sie eine Fenstergröße:",
+								"Fenstergröße", JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null,
+								options, options[0]);
+						switch (x) {
 						case 0:
 							Main.openNewFrame(g);
 							break;
@@ -232,9 +238,11 @@ public class GUI extends JFrame implements ActionListener {
 			Color backgroundColor = new Color(51, 51, 51);
 			Color graphColor = Color.WHITE;
 			Color fontColor = Color.BLACK;
+			Color overlappingEdge = Color.RED;
 			k.backgroundColor = backgroundColor;
 			k.mainColor = graphColor;
 			k.fontColor = fontColor;
+			k.overlappingEdge = overlappingEdge;
 			k.repaint();
 		} else if (e.getActionCommand().equalsIgnoreCase("darkTheme")) {
 			allowCustomColors = false;
@@ -242,9 +250,11 @@ public class GUI extends JFrame implements ActionListener {
 			Color backgroundColor = Color.BLACK;
 			Color graphColor = new Color(100, 100, 100);
 			Color fontColor = Color.BLACK;
+			Color overlappingEdge = Color.RED;
 			k.backgroundColor = backgroundColor;
 			k.mainColor = graphColor;
 			k.fontColor = fontColor;
+			k.overlappingEdge = overlappingEdge;
 			k.repaint();
 		} else if (e.getActionCommand().equalsIgnoreCase("wunderlandTheme")) {
 			allowCustomColors = false;
@@ -252,9 +262,11 @@ public class GUI extends JFrame implements ActionListener {
 			Color backgroundColor = new Color(43, 45, 66);
 			Color graphColor = new Color(239, 35, 60);
 			Color fontColor = new Color(237, 242, 244);
+			Color overlappingEdge = Color.WHITE;
 			k.backgroundColor = backgroundColor;
 			k.mainColor = graphColor;
 			k.fontColor = fontColor;
+			k.overlappingEdge = overlappingEdge;
 			k.repaint();
 		} else if (e.getActionCommand().equalsIgnoreCase("iceTheme")) {
 			allowCustomColors = false;
@@ -262,9 +274,11 @@ public class GUI extends JFrame implements ActionListener {
 			Color backgroundColor = Color.WHITE;
 			Color graphColor = new Color(128, 255, 255);
 			Color fontColor = Color.WHITE;
+			Color overlappingEdge = Color.BLUE;
 			k.backgroundColor = backgroundColor;
 			k.mainColor = graphColor;
 			k.fontColor = fontColor;
+			k.overlappingEdge = overlappingEdge;
 			k.repaint();
 		} else if (e.getActionCommand().equalsIgnoreCase("orangeTheme")) {
 			allowCustomColors = false;
@@ -272,9 +286,11 @@ public class GUI extends JFrame implements ActionListener {
 			Color backgroundColor = Color.WHITE;
 			Color graphColor = new Color(255, 96, 0);
 			Color fontColor = Color.WHITE;
+			Color overlappingEdge = Color.ORANGE;
 			k.backgroundColor = backgroundColor;
 			k.mainColor = graphColor;
 			k.fontColor = fontColor;
+			k.overlappingEdge = overlappingEdge;
 			k.repaint();
 		} else if (e.getActionCommand().equalsIgnoreCase("customTheme")) {
 			allowCustomColors = true;
@@ -299,11 +315,19 @@ public class GUI extends JFrame implements ActionListener {
 				k.fontColor = newColor;
 				k.repaint();
 			}
-		} else if (e.getActionCommand().equalsIgnoreCase("openWindow")) {
-			String[] options = {"Klein", "Mittel", "Groß"};
+		} else if (e.getActionCommand().equalsIgnoreCase("overlappingEdgeColor") && allowCustomColors) {
+			Color newColor = JColorChooser.showDialog(this, "Choose overlapp Color", Color.BLACK);
+			if (newColor != null) {
+				k.overlappingEdge = newColor;
+				k.repaint();
+			}
+		}
+		// -------------------------------Utils-------------------------------------------------
+		else if (e.getActionCommand().equalsIgnoreCase("openWindow")) {
+			String[] options = { "Klein", "Mittel", "Groß" };
 			int x = JOptionPane.showOptionDialog(null, "Bitte wählen Sie eine Fenstergröße:", "Fenstergröße",
 					JOptionPane.DEFAULT_OPTION, JOptionPane.INFORMATION_MESSAGE, null, options, options[0]);
-			switch(x) {
+			switch (x) {
 			case 0:
 				Main.openNewFrame(null);
 				break;
